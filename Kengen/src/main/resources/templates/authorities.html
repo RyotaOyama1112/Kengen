@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>一覧表示画面</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">一覧表示画面</h2>
+        <a href="/register" class="btn btn-success mb-3">新規登録</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>氏名</th>
+                    <th>権限1</th>
+                    <th>権限2</th>
+                    <th>権限3</th>
+                    <th>変更日時</th>
+                    <th>変更</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="authority : ${authorities}">
+                    <td th:text="${authority.name}"></td>
+                    <td th:text="${authority.authority1}"></td>
+                    <td th:text="${authority.authority2}"></td>
+                    <td th:text="${authority.authority3}"></td>
+                    <td th:text="${#dates.format(authority.changeDate, 'yyyy-MM-dd')}"></td>
+                    <td><a th:href="@{'/change/' + ${authority.userId}}" class="btn btn-warning">変更</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ログアウトフォーム -->
+        <form th:action="@{/logout}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit" class="btn btn-danger">ログアウト</button>
+        </form>
+    </div>
+</body>
+</html>
